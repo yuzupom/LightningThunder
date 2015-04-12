@@ -1,0 +1,61 @@
+<%= form_for(@user_game_infomation) do |f| %>
+  <% if @user_game_infomation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user_game_infomation.errors.count, "error") %> prohibited this user_game_infomation from being saved:</h2>
+
+      <ul>
+      <% @user_game_infomation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :life %><br>
+    <%= f.number_field :life %>
+  </div>
+  <div class="field">
+    <%= f.label :dragon_card_id %><br>
+    <%= f.number_field :dragon_card_id %>
+  </div>
+  <div class="field">
+    <%= f.label :called_dragon_card_id %><br>
+    <%= f.number_field :called_dragon_card_id %>
+  </div>
+  <div class="field">
+    <%= f.label :finger_1st %><br>
+    <%= f.text_field :finger_1st %>
+  </div>
+  <div class="field">
+    <%= f.label :finger_2nd %><br>
+    <%= f.text_field :finger_2nd %>
+  </div>
+  <div class="field">
+    <%= f.label :finger_3rd %><br>
+    <%= f.text_field :finger_3rd %>
+  </div>
+  <div class="field">
+    <%= f.label :finger_4th %><br>
+    <%= f.text_field :finger_4th %>
+  </div>
+  <div class="field">
+    <%= f.label :finger_5th %><br>
+    <%= f.text_field :finger_5th %>
+  </div>
+  <div class="field">
+    <%= f.label :parent %><br>
+    <%= f.text_field :parent %>
+  </div>
+  <div class="field">
+    <%= f.label :user_id %><br>
+    <%= f.number_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :ai_id %><br>
+    <%= f.number_field :ai_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

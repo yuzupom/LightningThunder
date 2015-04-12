@@ -1,0 +1,1 @@
+json.extract! @user_game_infomation, :id, :life, :dragon_card_id, :called_dragon_card_id, :finger_1st, :finger_2nd, :finger_3rd, :finger_4th, :finger_5th, :parent, :user_id, :ai_id, :created_at, :updated_at

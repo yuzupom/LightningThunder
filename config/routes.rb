@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  scope :api do
+    scope :v1 do
+      resources :rooms
+      resources :dragon_cards
+      resources :user_game_infomations
+      resources :users
+    end
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

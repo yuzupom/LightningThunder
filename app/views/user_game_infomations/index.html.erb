@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing User Game Infomations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Life</th>
+      <th>Dragon card</th>
+      <th>Called dragon card</th>
+      <th>Finger 1st</th>
+      <th>Finger 2nd</th>
+      <th>Finger 3rd</th>
+      <th>Finger 4th</th>
+      <th>Finger 5th</th>
+      <th>Parent</th>
+      <th>User</th>
+      <th>Ai</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @user_game_infomations.each do |user_game_infomation| %>
+      <tr>
+        <td><%= user_game_infomation.life %></td>
+        <td><%= user_game_infomation.dragon_card_id %></td>
+        <td><%= user_game_infomation.called_dragon_card_id %></td>
+        <td><%= user_game_infomation.finger_1st %></td>
+        <td><%= user_game_infomation.finger_2nd %></td>
+        <td><%= user_game_infomation.finger_3rd %></td>
+        <td><%= user_game_infomation.finger_4th %></td>
+        <td><%= user_game_infomation.finger_5th %></td>
+        <td><%= user_game_infomation.parent %></td>
+        <td><%= user_game_infomation.user_id %></td>
+        <td><%= user_game_infomation.ai_id %></td>
+        <td><%= link_to 'Show', user_game_infomation %></td>
+        <td><%= link_to 'Edit', edit_user_game_infomation_path(user_game_infomation) %></td>
+        <td><%= link_to 'Destroy', user_game_infomation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New User game infomation', new_user_game_infomation_path %>

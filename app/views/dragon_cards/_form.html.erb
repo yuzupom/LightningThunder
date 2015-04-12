@@ -1,0 +1,45 @@
+<%= form_for(@dragon_card) do |f| %>
+  <% if @dragon_card.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@dragon_card.errors.count, "error") %> prohibited this dragon_card from being saved:</h2>
+
+      <ul>
+      <% @dragon_card.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :short_word %><br>
+    <%= f.text_field :short_word %>
+  </div>
+  <div class="field">
+    <%= f.label :for_2_players %><br>
+    <%= f.text_field :for_2_players %>
+  </div>
+  <div class="field">
+    <%= f.label :for_3_players %><br>
+    <%= f.text_field :for_3_players %>
+  </div>
+  <div class="field">
+    <%= f.label :for_4_players %><br>
+    <%= f.text_field :for_4_players %>
+  </div>
+  <div class="field">
+    <%= f.label :main_text %><br>
+    <%= f.text_field :main_text %>
+  </div>
+  <div class="field">
+    <%= f.label :flavor_text %><br>
+    <%= f.text_field :flavor_text %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

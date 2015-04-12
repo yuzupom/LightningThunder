@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  display_name: MyString
+  win_count: 1
+  lose_count: 1
+  remember_token: MyString
+
+two:
+  display_name: MyString
+  win_count: 1
+  lose_count: 1
+  remember_token: MyString

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  short_word: MyString
+  for_2_players: 
+  for_3_players: 
+  for_4_players: 
+  main_text: MyString
+  flavor_text: MyString
+
+two:
+  name: MyString
+  short_word: MyString
+  for_2_players: 
+  for_3_players: 
+  for_4_players: 
+  main_text: MyString
+  flavor_text: MyString

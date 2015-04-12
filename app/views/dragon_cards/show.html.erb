@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @dragon_card.name %>
+</p>
+
+<p>
+  <strong>Short word:</strong>
+  <%= @dragon_card.short_word %>
+</p>
+
+<p>
+  <strong>For 2 players:</strong>
+  <%= @dragon_card.for_2_players %>
+</p>
+
+<p>
+  <strong>For 3 players:</strong>
+  <%= @dragon_card.for_3_players %>
+</p>
+
+<p>
+  <strong>For 4 players:</strong>
+  <%= @dragon_card.for_4_players %>
+</p>
+
+<p>
+  <strong>Main text:</strong>
+  <%= @dragon_card.main_text %>
+</p>
+
+<p>
+  <strong>Flavor text:</strong>
+  <%= @dragon_card.flavor_text %>
+</p>
+
+<%= link_to 'Edit', edit_dragon_card_path(@dragon_card) %> |
+<%= link_to 'Back', dragon_cards_path %>

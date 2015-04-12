@@ -1,0 +1,2 @@
+class AiController < ApplicationController
+end

@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  life: 1
+  dragon_card_id: 1
+  called_dragon_card_id: 1
+  finger_1st: 
+  finger_2nd: 
+  finger_3rd: 
+  finger_4th: 
+  finger_5th: 
+  parent: 
+  user_id: 1
+  ai_id: 1
+
+two:
+  life: 1
+  dragon_card_id: 1
+  called_dragon_card_id: 1
+  finger_1st: 
+  finger_2nd: 
+  finger_3rd: 
+  finger_4th: 
+  finger_5th: 
+  parent: 
+  user_id: 1
+  ai_id: 1
