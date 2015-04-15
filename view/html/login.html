@@ -1,0 +1,35 @@
+<html>
+<head>
+<meta charset='utf-8'>
+<script>
+window.onload = function(){
+	var ctx = document.getElementById('c').getContext('2d');
+	ctx.clearRect(0,0,640,480);
+
+	/*
+	 *  TODO
+	 */
+
+	//ここから下はサンプル
+	ctx.fillStyle = 'rgba(192, 192, 192, 1)'
+	ctx.fillRect(0,0,640,480);
+
+	ctx.strokeStyle = 'rgba(0, 0, 0, 1)'
+	ctx.strokeRect(150,180,230,60);
+
+	ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.font = '40px sans-serif';
+    ctx.fillText('国',150 + 230 + 10,180 + (60 - 40)/2);
+    var login_txt = ' 入場 ';
+	ctx.fillText(login_txt, 400, 290);
+	var tm = ctx.measureText(login_txt);
+	ctx.strokeRect(400,290,tm.width,40);
+}
+</script>
+</head>
+<body>
+<canvas id='c' width='640' height='480'>
+</body>
+</html>
