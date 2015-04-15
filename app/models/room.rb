@@ -2,7 +2,11 @@ class Room < ActiveRecord::Base
   has_many:users
 
   def creater
-    User.find(self.creater_id)
+    User.find(self.creater_id).to_h
+  end
+
+  def entried_users
+    self.users.to_a.map{|user| user.to_h}
   end
 
   def room_status_names

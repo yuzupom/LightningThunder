@@ -12,8 +12,7 @@ class RoomsController < ApplicationController
     params[:methods] << :room_status_name
     params[:methods] << :room_status_names
     params[:methods] << :creater
-    params[:include] = []
-    params[:include] << :users
+    params[:methods] << :entried_users
     super v.to_json(params)
   end
 
@@ -28,6 +27,7 @@ class RoomsController < ApplicationController
     params[:room][:room_status_id] = 0
     @room = Room.new(room_params)
     if @room.save
+      current_user.update_attribute(:room_id, @room.id)
       @room.update_attribute(:name, "room\##{@room.id}") if @room.name.blank?
       @room.update_attribute(:room_status_id, 10) if @room.room_status_id.blank?
       render_json @room

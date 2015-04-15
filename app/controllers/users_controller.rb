@@ -7,6 +7,7 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
+    render_json @users.to_a.map{|user| user.to_h}
   end
 
   # GET /users/1
@@ -19,14 +20,14 @@ class UsersController < ApplicationController
   def create
     if sign_in?
       current_user.update(user_params)
-      render_json current_user
+      render_json current_user.to_h
     else
       params[:user]={} if params[:user].blank?
       params[:user][:display_name] = default_name if params[:user][:display_name].blank? || params[:user][:display_name].endwith("国")
       @user = User.new(user_params)
       if @user.save
         sign_in @user
-        render_json @user
+        render_json @user.to_h
       else
         render_error @user.errors
       end

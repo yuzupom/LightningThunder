@@ -6,6 +6,12 @@ class User < ActiveRecord::Base
 
   validates :display_name, presence: true
 
+  def to_h
+    h = self.attributes
+    h.delete("remember_token")
+    h
+  end
+
   def User.new_remember_token
     SecureRandom.urlsafe_base64
   end
