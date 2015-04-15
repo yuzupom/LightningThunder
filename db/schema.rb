@@ -31,12 +31,15 @@ ActiveRecord::Schema.define(version: 20150412063602) do
   end
 
   create_table "rooms", force: :cascade do |t|
+    t.integer  "creater_id"
     t.integer  "room_status_id"
     t.string   "name"
     t.integer  "number_of_players"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end
+
+  add_index "rooms", ["creater_id"], name: "index_rooms_on_creater_id"
 
   create_table "user_game_infomations", force: :cascade do |t|
     t.integer "life"

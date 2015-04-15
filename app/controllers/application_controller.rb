@@ -9,6 +9,6 @@ class ApplicationController < ActionController::Base
   end
 
   def render_error(msg)
-    render json:{error_message:msg} ,status: 404
+    render json:{error_message:msg} ,status: 400
   end
 end

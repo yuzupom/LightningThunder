@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :user_game_infomations
+  has_one :user_game_infomation
   belongs_to :rooms
 
   before_create :create_remember_token
@@ -18,6 +18,5 @@ class User < ActiveRecord::Base
 
     def create_remember_token
       self.remember_token = User.encrypt(User.new_remember_token)
-      self.display_name = 'ななしさんの国' if self.display_name.blank?
     end
 end
