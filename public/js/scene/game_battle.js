@@ -22,7 +22,7 @@ require(['js/scene.js','js/compo.js'],function(){
 			xhr.send();
 			*/
 			Scene.change('game_damage');
-			Scene.start();
+			
 		}
 	}
 	scene_tag[tag].onEnd = function(){

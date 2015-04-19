@@ -22,6 +22,7 @@ var Scene;
 			}
 		}
 		scene_list.push(scene);
+		Scene.start();
 		return scene;
 	}
 	Scene.add = function(name){
@@ -32,6 +33,7 @@ var Scene;
 			}
 		}
 		scene_list.push(scene);
+		scene.onStart();		
 		return scene;
 	}
 	Scene.step = function(){

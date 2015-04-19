@@ -35,7 +35,7 @@ require(['js/scene.js','js/compo.js'],function(){
 			xhr.send();
 			*/
 			Scene.change('game_battle');
-			Scene.start();
+			
 		}
 	}
 	scene_tag[tag].onEnd = function(){

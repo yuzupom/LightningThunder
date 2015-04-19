@@ -5,7 +5,10 @@
 	<script src='js/require.js'></script>
 	<script>
 	window.onload = function(){
+		Data = {};
+		offline_debug = true;
 		require([
+			'js/data.js',
 			'js/scene/login.js', 
 			'js/scene/lobby_choose.js', 'js/scene/lobby_make.js', 
 			'js/scene/game_battle.js', 
@@ -21,7 +24,6 @@
 			'js/scene/game_whodoneit_performer.js', 
 			], function(){
 			Scene.change('login');
-			Scene.start();
 			main();
 		})
 	}

@@ -3,6 +3,7 @@ require(['js/scene.js','js/compo.js'],function(){
 	var base_url = 'https://lightning-thunder.herokuapp.com/api/v1'
 	scene_tag[tag] = {}
 	scene_tag[tag].onStart = function(){
+		console.log('hoge')
 		this.objs = [];
 		var button = compo.makeButton(400, 100, 100, 50, 'この設定で部屋作る');
 		this.objs.push(button);
@@ -22,7 +23,7 @@ require(['js/scene.js','js/compo.js'],function(){
 			xhr.send();
 			*/
 			Scene.change('game_waituser_performer');
-			Scene.start();
+			
 		}
 	}
 	scene_tag[tag].onEnd = function(){

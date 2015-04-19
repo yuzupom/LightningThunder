@@ -24,11 +24,11 @@ require(['js/scene.js','js/compo.js'],function(){
 			xhr.send();
 			*/
 			Scene.change('game_encountDragon');
-			Scene.start();
+			
 		}
 		result.elm.onclick = function(){
 			Scene.change('game_result');
-			Scene.start();
+			
 		}
 	}
 	scene_tag[tag].onEnd = function(){

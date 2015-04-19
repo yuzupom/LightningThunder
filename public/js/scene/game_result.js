@@ -1,4 +1,4 @@
-require(['js/scene.js','js/compo.js'],function(){
+require(['js/scene.js','js/compo.js'], function(){
 	var tag = 'game_result'
 	var base_url = 'https://lightning-thunder.herokuapp.com/api/v1'
 	scene_tag[tag] = {}
@@ -22,7 +22,7 @@ require(['js/scene.js','js/compo.js'],function(){
 			xhr.send();
 			*/
 			Scene.change('lobby_choose');
-			Scene.start();
+			
 		}
 	}
 	scene_tag[tag].onEnd = function(){
