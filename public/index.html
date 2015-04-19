@@ -1,0 +1,39 @@
+<html>
+<head>
+	<meta charset='utf-8'>
+	<script src='js/promise.js'></script>
+	<script src='js/require.js'></script>
+	<script>
+	window.onload = function(){
+		require([
+			'js/scene/login.js', 
+			'js/scene/lobby_choose.js', 'js/scene/lobby_make.js', 
+			'js/scene/game_battle.js', 
+			'js/scene/game_chara_open.js', 
+			'js/scene/game_chooseNumber_audience.js', 
+			'js/scene/game_chooseNumber_performer.js', 
+			'js/scene/game_damage.js', 
+			'js/scene/game_encountDragon.js', 
+			'js/scene/game_result.js', 
+			'js/scene/game_waituser_audience.js', 
+			'js/scene/game_waituser_performer.js', 
+			'js/scene/game_whodoneit_audience.js', 
+			'js/scene/game_whodoneit_performer.js', 
+			], function(){
+			Scene.change('login');
+			Scene.start();
+			main();
+		})
+	}
+	function main(){
+		var ctx = document.getElementById('c').getContext('2d');
+		Scene.draw(ctx);
+		Scene.step();
+		setTimeout(main, 100);
+	}
+	</script>
+</head>
+<body>
+	<canvas id='c' width='640' height='480' style='position:absolute;left:0px;top:0px;'>
+	<div id='debug'>debug</div>
+</body>
