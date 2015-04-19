@@ -12,11 +12,10 @@ class UsersController < ApplicationController
   end
 
   def create
-    #TODO remove comment out
-    # if sign_in?
-    #   current_user.update(user_params)
-    #   render_json current_user.to_h
-    # else
+    if sign_in?
+      current_user.update(user_params)
+      render_json current_user.to_h
+    else
       params[:user]={} if params[:user].blank?
       params[:user][:display_name] = default_name if params[:user][:display_name].blank? || !params[:user][:display_name].end_with?("国")
       @user = User.new(user_params)
@@ -26,7 +25,7 @@ class UsersController < ApplicationController
       else
         render_error @user.errors
       end
-    # end
+    end
   end
 
   private
