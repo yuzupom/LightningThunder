@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
 
   def to_h(option = {:except => ["remember_token"]})
     h = self.attributes
+    h["seated_room_id"] = h.delete("room_id") if h.has_key? "room_id"
     if option[:except].present?
       option[:except].each{|k| h.delete(k)}
     end
