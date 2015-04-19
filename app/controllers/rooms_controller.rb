@@ -68,7 +68,7 @@ class RoomsController < ApplicationController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def room_params
-      params.require(:room).permit(:creater_id, :name, :number_of_players)
+      params.require(:room).permit(:creater_id, :name, :number_of_players, :room_status_id)
     end
 
     def user_is_correct?
