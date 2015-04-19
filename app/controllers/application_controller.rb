@@ -6,9 +6,11 @@ class ApplicationController < ActionController::Base
 
   def render_json(p)
     render json:p ,status: 200
+    true
   end
 
   def render_error(msg)
     render json:{error_message:msg} ,status: 400
+    false
   end
 end

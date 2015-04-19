@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
   scope :api do
     scope :v1 do
-      resources :rooms
-      resources :dragon_cards
-      resources :user_game_infomations
-      resources :users
+      get 'user' => 'users#show'
+      get 'users' => 'users#index'
+      post 'users' => 'users#create'
+      get 'room' => 'rooms#show'
+      get 'rooms' => 'rooms#index'
+      post 'rooms' => 'rooms#create'
+      post 'rooms/seats/take' => 'rooms#take_seat'
+      post 'rooms/seats/leave' => 'rooms#leave_seat'
     end
   end
 

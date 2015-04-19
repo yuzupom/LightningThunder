@@ -1,5 +1,10 @@
 module SessionsHelper
 
+  def user_sign_in?
+    return render_error "you did not sign_in yet" unless sign_in?
+    return true
+  end
+
   def sign_in(user)
     remember_token = User.new_remember_token
     cookies.permanent[:remember_token] = remember_token

@@ -1,14 +1,20 @@
 class User < ActiveRecord::Base
   has_one :user_game_infomation
-  belongs_to :rooms
+  belongs_to :room
 
   before_create :create_remember_token
 
   validates :display_name, presence: true
 
-  def to_h
+  def entries?
+    room.present?
+  end
+
+  def to_h(option = {:except => ["remember_token"]})
     h = self.attributes
-    h.delete("remember_token")
+    if option[:except].present?
+      option[:except].each{|k| h.delete(k)}
+    end
     h
   end
 
