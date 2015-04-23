@@ -12,7 +12,7 @@ require(['js/scene.js','js/compo.js','js/xhr.js','js/data.js'],function(){
 		button.elm.onclick = function(){
 			var data = {
 				"id": 1,
-				"display_name": "小柳の国",
+				"display_name": textbox.elm.value+"国",
 				"seated_room_id": null,
 				"win_count": 0,
 				"lose_count": 0,
@@ -20,14 +20,13 @@ require(['js/scene.js','js/compo.js','js/xhr.js','js/data.js'],function(){
 				"updated_at": "2015-04-12T08:43:50.667Z",
 				"ai_id": null,
 			}
-			var cb = function(json){
-				Data.user = json;
+			var cb = function(data){
+				Data.user = data;
 				Scene.change('lobby_choose');
 			}
-			dummy_xhr(data, cb)
-			/*
-			xhr('POST', '/users?user[display_name]='+textbox.elm.value+'国', cb)
-			*/
+			dummy_xhr(data, cb)			
+			// xhr('POST', '/users?user[display_name]='+textbox.elm.value+'国', cb)
+			
 		}
 	}
 	scene_tag[tag].onEnd = function(){

@@ -47,6 +47,8 @@ require(['js/scene.js','js/compo.js'],function(){
 		ctx.fillStyle = "rgba(255, 255, 255, 1)"
 		ctx.fillText(tag , 0, 0);
 
+		ctx.fillText(Data.user.display_name , 0, 100);
+
 		for(var i=this.objs.length-1; i>=0; i--){
 			this.objs[i].onDraw(ctx);
 		}

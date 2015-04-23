@@ -11,7 +11,6 @@
 		xhr.setRequestHeader("Content-Type" , "application/x-www-form-urlencoded");
 		xhr.send();
 	}
-
 	dummy_xhr = function(data, cb){
 		setTimeout(cb(data),0);
 	}
