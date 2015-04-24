@@ -6,6 +6,7 @@
 	<script>
 	window.onload = function(){
 		Data = {};
+		DRAGON_NAME_LIST=['akonitam','gyari-_ma_eibis','ifeion','rindou','rudobegia','tenran']
 		offline_debug = true;
 		require([
 			'js/data.js',
@@ -24,7 +25,16 @@
 			'js/scene/game_whodoneit_audience.js', 
 			'js/scene/game_whodoneit_performer.js', 
 			], function(){
-			img.load(['img/ドラゴン画像/d_akonitam.png','img/oukan.png']).then(function(){
+			var imgs = ['img/oukan.png','img/背景/lightning.jpg']
+			for (var i = 0; i <= 6; i++){
+				imgs.push('img/手/' + i + '.png')
+			} 
+
+			for (var i = 0; i < 6; i++){
+				imgs.push('img/ドラゴン画像/d_'+DRAGON_NAME_LIST[i]+'.png')
+			}
+
+			img.load(imgs).then(function(){
 				main();
 				Scene.change('login');				
 			})

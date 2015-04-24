@@ -24,7 +24,7 @@ var img = {};
 	}
 	img.get = function(filename){
 		if(!F[filename]){
-			console.error('この画像はまだロードしてないよ！')
+			console.error('この画像はまだロードしてないよ:'+filename)
 		}
 		return F[filename];
 	}
