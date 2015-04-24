@@ -9,6 +9,11 @@ Rails.application.routes.draw do
       post 'rooms' => 'rooms#create'
       post 'rooms/seats/take' => 'rooms#take_seat'
       post 'rooms/seats/leave' => 'rooms#leave_seat'
+
+      post 'game/start'  => 'rooms#game_start'
+      post 'game/finger' => 'rooms#cast_finger'
+      post 'game/name'   => 'rooms#cast_name'
+      post 'game/ok'     => 'rooms#cast_ok'
     end
   end
 
