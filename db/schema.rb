@@ -14,16 +14,14 @@
 ActiveRecord::Schema.define(version: 20150412063602) do
 
   create_table "dragon_cards", force: :cascade do |t|
-    t.string   "name"
-    t.string   "short_word"
-    t.boolean  "for_2_players"
-    t.boolean  "for_3_players"
-    t.boolean  "for_4_players"
-    t.string   "main_text"
-    t.string   "flavor_text"
-    t.integer  "atk"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.string  "name"
+    t.string  "short_word"
+    t.boolean "for_2_players"
+    t.boolean "for_3_players"
+    t.boolean "for_4_players"
+    t.string  "main_text"
+    t.string  "flavor_text"
+    t.integer "atk"
   end
 
   create_table "room_statuses", force: :cascade do |t|
@@ -51,8 +49,12 @@ ActiveRecord::Schema.define(version: 20150412063602) do
     t.boolean "finger_4th",            default: false
     t.boolean "finger_5th",            default: false
     t.boolean "parent",                default: false
+    t.boolean "posted_ok",             default: false
+    t.boolean "successed_summon"
+    t.boolean "win_game"
+    t.integer "changed_life",          default: 0
     t.integer "user_id"
-    t.integer "ai_id"
+    t.integer "rank"
   end
 
   add_index "user_game_infomations", ["user_id"], name: "index_user_game_infomations_on_user_id"
@@ -63,6 +65,7 @@ ActiveRecord::Schema.define(version: 20150412063602) do
     t.integer  "win_count",      default: 0
     t.integer  "lose_count",     default: 0
     t.string   "remember_token"
+    t.integer  "ai_id"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
   end

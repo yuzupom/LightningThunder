@@ -6,6 +6,7 @@ class CreateUsers < ActiveRecord::Migration
       t.integer :win_count, default:0
       t.integer :lose_count, default:0
       t.string :remember_token
+      t.integer :ai_id, default:nil
 
       t.timestamps null: false
     end

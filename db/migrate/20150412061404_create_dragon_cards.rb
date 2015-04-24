@@ -9,8 +9,6 @@ class CreateDragonCards < ActiveRecord::Migration
       t.string :main_text
       t.string :flavor_text
       t.integer :atk
-
-      t.timestamps null: false
     end
   end
 end
