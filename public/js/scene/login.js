@@ -1,6 +1,5 @@
-require(['js/scene.js','js/compo.js'],function(){
+require(['js/scene.js','js/compo.js','js/xhr.js','js/data.js'],function(){
 	var tag = 'login'
-	var base_url = 'https://lightning-thunder.herokuapp.com/api/v1'
 	scene_tag[tag] = {}
 	scene_tag[tag].onStart = function(){
 		this.objs = [];
@@ -11,21 +10,23 @@ require(['js/scene.js','js/compo.js'],function(){
 
 		//決定ボタン押したら
 		button.elm.onclick = function(){
+			var data = {
+				"id": 1,
+				"display_name": textbox.elm.value+"国",
+				"seated_room_id": null,
+				"win_count": 0,
+				"lose_count": 0,
+				"created_at": "2015-04-12T08:43:50.658Z",
+				"updated_at": "2015-04-12T08:43:50.667Z",
+				"ai_id": null,
+			}
+			var cb = function(data){
+				Data.user = data;
+				Scene.change('lobby_choose');
+			}
+			dummy_xhr(data, cb)			
+			// xhr('POST', '/users?user[display_name]='+textbox.elm.value+'国', cb)
 			
-			var xhr = new XMLHttpRequest();
-			xhr.open('POST' , base_url+'/users?user[display_name]='+textbox.value);
-			xhr.onreadystatechange = function(){
-				if (xhr.readyState === 4){
-					Data.user = JSON.parse(xhr.responseText);
-					Scene.change('lobby_choose');
-					Scene.start();
-				}
-			};
-			xhr.setRequestHeader("Content-Type" , "application/x-www-form-urlencoded");
-			xhr.send();
-			
-			// Scene.change('lobby_choose');
-			// Scene.start();
 		}
 	}
 	scene_tag[tag].onEnd = function(){
@@ -47,7 +48,6 @@ require(['js/scene.js','js/compo.js'],function(){
 		ctx.textBaseline = 'top';
 		ctx.fillStyle = "rgba(255, 255, 255, 1)"
 		ctx.fillText(tag , 0, 0);
-
 		for(var i=this.objs.length-1; i>=0; i--){
 			this.objs[i].onDraw(ctx);
 		}

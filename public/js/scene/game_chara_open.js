@@ -26,15 +26,15 @@ require(['js/scene.js','js/compo.js'],function(){
 			xhr.send();
 			*/
 			Scene.change('game_whodoneit_performer');
-			Scene.start();
+			
 		}
 		button2.elm.onclick = function(){
 			Scene.change('game_whodoneit_audience');
-			Scene.start();
+			
 		}
 		button3.elm.onclick = function(){
 			Scene.change('game_battle');
-			Scene.start();
+			
 		}
 	}
 	scene_tag[tag].onEnd = function(){

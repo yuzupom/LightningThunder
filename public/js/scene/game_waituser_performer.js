@@ -26,15 +26,15 @@ require(['js/scene.js','js/compo.js'],function(){
 			xhr.send();
 			*/
 			Scene.change('game_encountDragon');
-			Scene.start();
+			
 		}
 		exit.elm.onclick = function(){
 			Scene.change('lobby_choose');
-			Scene.start();
+			
 		}
 		begin.elm.onclick = function(){
 			Scene.change('game_encountDragon');
-			Scene.start();
+			
 		}
 	}
 	scene_tag[tag].onEnd = function(){

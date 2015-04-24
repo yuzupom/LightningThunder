@@ -10,7 +10,7 @@ compo = {};
 		elm.style.width  = w;
 		elm.style.height = h;
 		document.body.appendChild(elm);
-		elm.style.opacity = '0'
+		elm.style.opacity = '0.1'
 		// document.onkeyup = function(){
 		// }
 		var onStep = function(){};
@@ -35,7 +35,7 @@ compo = {};
 	compo.makeButton = function(x, y, w, h, value){
 		var elm = document.createElement('button');
 		elm.style.position = 'absolute';
-		elm.style.opacity = '0.5'
+		elm.style.opacity = '0.1'
 		elm.style.left = x+parseInt(base_x);
 		elm.style.top  = y+parseInt(base_y);
 		elm.style.width  = w;
