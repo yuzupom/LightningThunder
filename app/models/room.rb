@@ -17,7 +17,7 @@ class Room < ActiveRecord::Base
 
   def seated_users current_user
     self.users.to_a.map{|user|
-      user.to_h(position:position(user,current_user), except:["remember_token","room_id"])
+      user.to_h(current_user:current_user, except:["remember_token","room_id"])
     }
   end
 
@@ -146,40 +146,5 @@ class Room < ActiveRecord::Base
   end
 
   private
-    def position target_user,current_user
-    return :YOU if target_user == current_user
-    current_user_position = -1
-    target_user_position = -1
-    self.users.length.times{|i|
-      current_user_position = i if self.users[i] == current_user
-      target_user_position = i if self.users[i] == target_user
-    }
-    if current_user != -1 && target_user_position != -1
-      diff = target_user_position - current_user_position
-      diff += number_of_players if diff < 0
-      diff -= number_of_players if diff >= number_of_players
-      case number_of_players
-      when 2
-        return :OPPONENT
-      when 3
-        case diff
-        when 1
-          return :LEFT_PERSON
-        when 2
-          return :RIGHT_PERSON
-        end
-      when 4
-        case diff
-        when 1
-          return :FIRST_LEFT_PERSON
-        when 2
-          return :SECOND_LEFT_PERSON
-        when 3
-          return :THIRD_LEFT_PERSON
-        end
-      end
-    end
-    return :SOMEONE
-  end
 
 end

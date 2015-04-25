@@ -30,7 +30,10 @@ class User < ActiveRecord::Base
 
   def to_h(option = {:except => ["remember_token"]})
     h = self.attributes
-    h["game_infomation"] = has_game_infomation?(option)? user_game_infomation.to_h(option[:position]) : nil
+    h["game_infomation"] =
+      if has_game_infomation?
+        user_game_infomation.to_h(position(option[:current_user]))
+      end
     if option[:except].present?
       option[:except].each{|k| h.delete(k)}
     end
@@ -38,8 +41,8 @@ class User < ActiveRecord::Base
     h
   end
 
-  def has_game_infomation? option
-    user_game_infomation && room && option[:position]
+  def has_game_infomation?
+    user_game_infomation && room
   end
 
   def User.new_remember_token
@@ -50,8 +53,53 @@ class User < ActiveRecord::Base
     Digest::SHA1.hexdigest(token.to_s)
   end
 
+  def right_person current_user
+    arr = [:OPPONENT, :RIGHT_PERSON, :THIRD_LEFT_PERSON]
+    room.users.find{|user|
+      arr.include? user.position(current_user)
+    }
+  end
+
+  def position current_user
+    return nil unless current_user
+    return :YOU if self == current_user
+    current_user_position = -1
+    target_user_position = -1
+    room.users.length.times{|i|
+      current_user_position = i if room.users[i] == current_user
+      target_user_position  = i if room.users[i] == self
+    }
+    if current_user != -1 && target_user_position != -1
+      diff = target_user_position - current_user_position
+      diff += room.number_of_players if diff < 0
+      diff -= room.number_of_players if diff >= room.number_of_players
+      case room.number_of_players
+      when 2
+        return :OPPONENT
+      when 3
+        case diff
+        when 1
+          return :LEFT_PERSON
+        when 2
+          return :RIGHT_PERSON
+        end
+      when 4
+        case diff
+        when 1
+          return :FIRST_LEFT_PERSON
+        when 2
+          return :SECOND_LEFT_PERSON
+        when 3
+          return :THIRD_LEFT_PERSON
+        end
+      end
+    end
+    return :SOMEONE
+  end
+
   private
     def create_remember_token
       self.remember_token = User.encrypt(User.new_remember_token) unless self.ai_id
     end
+
 end

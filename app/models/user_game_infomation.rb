@@ -3,6 +3,8 @@ class UserGameInfomation < ActiveRecord::Base
   belongs_to :dragon_card
 
   def to_h(position)
+    hidden = "-hidden-"
+    return hidden unless position
     h = {position:position,life:life,parent:parent}
     h[:finger_ready] = finger.present?
     flgs_hidden = {detail:true, finger:true, dragon:true}

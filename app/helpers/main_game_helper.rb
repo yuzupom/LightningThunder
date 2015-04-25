@@ -124,11 +124,11 @@ module MainGameHelper
       @locked_room.users.each{|user|
         counter = user.ai_id.blank?? nil : User.find_by(ai_id: user.ai_id)
         if user.user_game_infomation.win_game
-          user   .update_attribute(:win_count,user.win_count + 1)
-          counter.update_attribute(:win_count,user.win_count + 1) if counter
+          user   .update_attribute(:win_count,  user   .win_count  + 1)
+          counter.update_attribute(:win_count,  counter.win_count  + 1) if counter
         else
-          user   .update_attribute(:lose_count,user.lose_count + 1)
-          counter.update_attribute(:lose_count,user.lose_count + 1) if counter
+          user   .update_attribute(:lose_count, user   .lose_count + 1)
+          counter.update_attribute(:lose_count, counter.lose_count + 1) if counter
         end
       }
       @locked_room.reload
@@ -169,7 +169,7 @@ module MainGameHelper
     def decideRank
       all_fingers = @locked_room.users.map{|user| user.finger}
       suceessed_users = @locked_room.users.select{|user|
-        flg = user.user_game_infomation.dragon_card.success?(user.finger,all_fingers)
+        flg = user.user_game_infomation.dragon_card.success?(current_user,user,all_fingers)
         user.user_game_infomation.update_attribute(:successed_summon, flg)
         flg
       }

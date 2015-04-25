@@ -2,7 +2,7 @@ class RoomsController < ApplicationController
   include MainGameHelper
 
   def render_json(v)
-    if v.kind_of? Enumerable
+    if v.kind_of? ActiveRecord::Relation
       super v.map{|room|
         room.to_h(current_user)
       }
@@ -20,9 +20,8 @@ class RoomsController < ApplicationController
       return render_error "the room is not in game" unless room.in_game?
       return render_error "the room is not waiting for cast NAME" unless room.waits_for_dragon_name?
       return render_error "you do not have 雷竜の右腕　ルドベギア (you have #{current_user.user_game_infomation.dragon_card.short_name})" if current_user.user_game_infomation.dragon_card.short_name != :推理
-      #TODO
-      # current_user.saveFingers(params[:cast])
-      # gotoDragonNamePhase room.reload
+      current_user.user_game_infomation.update_attribute(:called_dragon_card_id, params[:cast].to_i)
+      endRound room.reload
       return render_json room.reload
     end
 

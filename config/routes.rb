@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   scope :api do
     scope :v1 do
+      get 'dragons' => 'dragon_cards#index'
       get 'user' => 'users#show'
       get 'users' => 'users#index'
       post 'users' => 'users#create'
