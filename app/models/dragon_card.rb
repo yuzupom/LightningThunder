@@ -11,7 +11,7 @@ class DragonCard < ActiveRecord::Base
     case self.short_name
     when :推理
       if my_finger == 1
-        right_card_id = me.right_person(current_user).user_game_infomation.dragon_card_id
+        right_card_id = me.right_person.user_game_infomation.dragon_card_id
         me.user_game_infomation.called_dragon_card_id == right_card_id
       else
         false

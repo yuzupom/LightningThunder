@@ -1,5 +1,4 @@
 module MainGameHelper
-  #csv
   include CpuHelper
 
   def startGame locked_room
@@ -48,13 +47,16 @@ module MainGameHelper
       locked_room.users.each{|user|
         flg_suiri = user.user_game_infomation.dragon_card.short_name == :推理
         if flg_suiri && user.user_game_infomation.finger == 1
-          break flg_skip = false
+          if user.ai_id
+            user.user_game_infomation.update_attribute(:called_dragon_card_id, decideCPUDragonName(user))
+          else
+            flg_skip = false
+          end
+          break
         end
       }
       if flg_skip
         endRound locked_room
-      else
-        decideCPUDragonName
       end
     end
     return true
@@ -194,7 +196,12 @@ module MainGameHelper
 
     def prepareGame
       @locked_room.users.each{|user|
-        UserGameInfomation.create(life: 4, user_id: user.id)
+        params = {life: 4, user_id: user.id}
+        if user.user_game_infomation
+          user.user_game_infomation.update_attributes params
+        else
+          UserGameInfomation.create params
+        end
       }
       if @locked_room.number_of_players === (2..3)
         @locked_room.users[rand(@locked_room.number_of_players)].user_game_infomation.update_attribute(:parent, true)

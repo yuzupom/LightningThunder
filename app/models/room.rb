@@ -83,9 +83,8 @@ class Room < ActiveRecord::Base
   end
 
   def close
-    self.update_attribute(:room_status_id, 50)
-    self.users.each{|user|
-      user.user_game_infomation.destroy
+    update_attribute(:room_status_id, 50)
+    users.each{|user|
       if user.ai_id
         user.destroy
       else
