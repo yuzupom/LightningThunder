@@ -15,19 +15,35 @@
 			audio.playSE("se/決定音候補/se_maoudamashii_system40.mp3");
 			Scene.change('lobby_make');
 		}
-		for(var i=0; i<this.room.length; i++){
+
+		//通信待機
+		update_timer = setInterval(function(){
+			var cb = function(data){
+				if(update_timer){
+					Data.rooms = data;
+				}
+			}
+			api['GET']['rooms'](cb);
+		}, 1000)		
+
+		var i = 0;
+		for(var j=0; j<Data.rooms.length; j++){
+			if(!Data.rooms[j]){continue}
+			if(Data.rooms[j].room_status_name != "WaitingForPlayers"){continue}
 			(function(i, room){
-				if(!Data.rooms[i]){return}
 				room[i].elm.onclick = function(){
 					audio.playSE("se/決定音候補/se_maoudamashii_system40.mp3");
 					var cb = function(data){
 						Data.room = data;
+						clearInterval(update_timer);
+						update_timer = null;
 						Scene.change('game_waituser_audience');
 					}
-					var room_id = Data.rooms[i].detail.id;
+					var room_id = Data.rooms[j].detail.id;
 					api['POST']['rooms/seats/take'](room_id, cb);
 				}
 			})(i, this.room);
+			i++;
 		}
 	}
 	scene_tag[tag].onEnd = function(){

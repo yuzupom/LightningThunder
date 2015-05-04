@@ -13,10 +13,14 @@
 			audio.playSE("se/決定音候補/se_maoudamashii_system40.mp3");
 			var cb = function(data){
 				Data.user = data;
-				Scene.change('lobby_choose');
+				var cb = function(data){
+					Data.rooms = data;
+					Scene.change('lobby_choose');
+				}
+				api['GET']['rooms'](cb);
 			}
-			if(textbox.elm.value != ''){
-				api['POST']['users'](textbox.elm.value + '国', cb);			
+			if(false && textbox.elm.value != ''){
+				api['POST']['users'](textbox.elm.value + '国', cb);
 			}
 			else{
 				api['POST']['users']('', cb);			

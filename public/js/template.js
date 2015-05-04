@@ -23,14 +23,17 @@ var template = {};
 		ctx.fillStyle = "rgba(255, 255, 255, 1)"
 		ctx.font = '28px/2 sans-serif';
 
-		for(var i=0;i<4;i++){
-			if(!Data.rooms[i]){continue}
+		var i = 0;
+		for(var j=0; j<rooms.length; j++){
+			if(!rooms[j]){continue}
+			if(rooms[j].room_status_name != "WaitingForPlayers"){continue}
 			var image = img.get('img/背景/lobby/room.gif')
 			ctx.drawImage(image, 70, 118+(i*85));
 			ctx.textAlign = 'left';
-			ctx.fillText(rooms[i].name, 90, 156+(i*85));
+			ctx.fillText(rooms[j].name, 90, 156+(i*85));
 			ctx.textAlign = 'right';
-			ctx.fillText(rooms[i].seated_users.length+'/4', 550, 156+(i*85));
+			ctx.fillText(rooms[j].seated_users.length+'/4', 550, 156+(i*85));
+			i++;
 		}
 
 		ctx.font = '28px/2 sans-serif';

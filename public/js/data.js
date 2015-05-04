@@ -4,12 +4,19 @@ var Data = {};
 	Data.getPlayerInfos = function(){
 		var player_infos = []
 		for(var i=0; i<4; i++){
+			if(typeof Data.room.seated_users[i] === "undefined"){
+				player_infos[j] = [];
+				player_infos[j][0] = "空席";					
+				player_infos[j][1] = 6;
+				player_infos[j][2] = 0;
+				player_infos[j][3] = -1;
+			}
 			var pl = Data.room.seated_users[i];
-			if(!pl.game_infomation){
+			if(pl.game_infomation == null){
 				player_infos[j] = [];
 				player_infos[j][0] = pl.display_name;
 				player_infos[j][1] = 6;
-				player_infos[j][2] = 0;
+				player_infos[j][2] = 4;
 				player_infos[j][3] = -1;
 			}
 			else{
@@ -159,7 +166,7 @@ var Data = {};
 
 	Data.rooms = [
 		{
-			"name":"AAAA",
+			"name":"aaa",
 			"number_of_players":4,
 			"room_status_name":"Closed",
 			"seated_users":[],

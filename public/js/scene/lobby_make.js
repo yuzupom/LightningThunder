@@ -13,7 +13,7 @@
 
 		ok.elm.onclick = function(){
 			audio.playSE("se/決定音候補/se_maoudamashii_system40.mp3");
-			api['POST']['rooms'](textbox.elm.value+"国", function(data){
+			api['POST']['rooms'](textbox.elm.value, function(data){
 				Data.room = data;
 				Scene.change('game_waituser_performer');
 			})
