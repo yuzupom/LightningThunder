@@ -11,6 +11,17 @@ module MainGameHelper
     return true
   end
 
+  def startRound locked_room
+    lock(locked_room) do
+      success = locked_room.updateStatusTo :PlayingGame_WaitingForLightning
+      return false unless success
+      resetStatus
+      dealCard
+      decideCPUFinger
+    end
+    resetTime
+  end
+
   def postOK locked_room
     lock(locked_room) do
       flg = locked_room.users.each{|user|
@@ -22,25 +33,9 @@ module MainGameHelper
     return true
   end
 
-  def lock room
-    @locked_room = room
-    yield
-    @locked_room = nil
-  end
-
-  def startRound locked_room
-    lock(locked_room) do
-      success = locked_room.updateStatusTo :PlayingGame_WaitingForLightning
-      return false unless success
-      resetStatus
-      dealCard
-      decideCPUFinger
-    end
-  end
-
   def gotoDragonNamePhase locked_room
-    return false unless locked_room.waits_for_lightning?
     lock(locked_room) do
+      return false unless locked_room.waits_for_lightning?
       success = locked_room.updateStatusTo :PlayingGame_WaitingForDragonName
       return false unless success
       flg_skip = true
@@ -59,6 +54,7 @@ module MainGameHelper
         endRound locked_room
       end
     end
+    resetTime
     return true
   end
 
@@ -227,6 +223,17 @@ module MainGameHelper
       end
       @locked_room.reload
     end
+
+    def lock room
+      @locked_room = room
+      yield
+      @locked_room = nil
+    end
+
+    def resetTime
+      @locked_room.touch
+    end
+
 
 =begin
   t.integer :dragon_card_id
