@@ -6,7 +6,29 @@
 	<script>
 	window.onload = function(){
 		var scene_dir = 'js/scene/'
-		require(["game.js"], function(){
+		require([
+			'js/data.js',
+			'js/template.js',
+			'js/api.js',
+			'js/audio.js',
+			'js/table.js',
+			'js/img.js',
+			'js/scene.js',
+			'js/compo.js',
+			scene_dir + 'login.js', 
+			scene_dir + 'lobby_choose.js', scene_dir + 'lobby_make.js', 
+			scene_dir + 'game_battle.js', 
+			scene_dir + 'game_chara_open.js', 
+			scene_dir + 'game_chooseNumber_audience.js', 
+			scene_dir + 'game_chooseNumber_performer.js', 
+			scene_dir + 'game_damage.js', 
+			scene_dir + 'game_encountDragon.js', 
+			scene_dir + 'game_result.js', 
+			scene_dir + 'game_waituser_audience.js', 
+			scene_dir + 'game_waituser_performer.js', 
+			scene_dir + 'game_whodoneit_audience.js', 
+			scene_dir + 'game_whodoneit_performer.js', 
+			], function(){
 			var imgs = [
 			  'img/oukan.png',
 			  'img/connect.png',

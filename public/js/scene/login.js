@@ -1,32 +1,21 @@
-require(['js/scene.js','js/compo.js','js/xhr.js','js/data.js'],function(){
+(function(){
 	var tag = 'login'
 	scene_tag[tag] = {}
 	scene_tag[tag].onStart = function(){
 		this.objs = [];
-		var textbox = compo.makeTextbox(100, 100, 200, 50);
+		var textbox = compo.makeTextbox(135, 327, 240, 50);
 		this.objs.push(textbox);
-		var button = compo.makeButton(500, 100, 100, 50, '国名決定');
+		var button = compo.makeButton(420, 305, 120, 100, '国名決定');
 		this.objs.push(button);
 
 		//決定ボタン押したら
 		button.elm.onclick = function(){
-			var data = {
-				"id": 1,
-				"display_name": textbox.elm.value+"国",
-				"seated_room_id": null,
-				"win_count": 0,
-				"lose_count": 0,
-				"created_at": "2015-04-12T08:43:50.658Z",
-				"updated_at": "2015-04-12T08:43:50.667Z",
-				"ai_id": null,
-			}
+			audio.playSE("se/決定音候補/se_maoudamashii_system40.mp3");
 			var cb = function(data){
 				Data.user = data;
 				Scene.change('lobby_choose');
 			}
-			dummy_xhr(data, cb)			
-			// xhr('POST', '/users?user[display_name]='+textbox.elm.value+'国', cb)
-			
+			api['POST']['users'](textbox.elm.value + '国', cb);
 		}
 	}
 	scene_tag[tag].onEnd = function(){
@@ -39,18 +28,18 @@ require(['js/scene.js','js/compo.js','js/xhr.js','js/data.js'],function(){
 		this.objs = null;
 		document.onkeyup = null;
 	}
+	var text = {}
 	scene_tag[tag].onDraw = function(ctx){
-		ctx.fillStyle = "rgba(30, 0, 0, 1)"
-		ctx.fillRect(0,0,640,480);
+		var image = img.get('img/背景/title_bg.png')
+		ctx.drawImage(image, 0, 0)
+		// ctx.drawImage(image, Math.random()*10|0-5, Math.random()*10|0-5);
 
-		ctx.font = '36px/2 sans-serif';
-		ctx.textAlign = 'left';
-		ctx.textBaseline = 'top';
-		ctx.fillStyle = "rgba(255, 255, 255, 1)"
-		ctx.fillText(tag , 0, 0);
+		var image = img.get('img/背景/title_form2.png')
+		ctx.drawImage(image, 133, 308);
+
 		for(var i=this.objs.length-1; i>=0; i--){
 			this.objs[i].onDraw(ctx);
 		}
 	}
-})
+})();
 

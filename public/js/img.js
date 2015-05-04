@@ -8,9 +8,8 @@ var img = {};
 (function(){
 	img.load = function(filename, cb_progress){
 		filename = (filename instanceof Array) ? filename : [filename];
-		var file_num = filename.length
 		var all = [];
-		for(var i=0; i<file_num; i++){
+		for(var i=0; i<filename.length; i++){
 			all.push(load(filename[i])
 				.then(function(value){
 					return (cb_progress instanceof Function) ? cb_progress(value) : value
