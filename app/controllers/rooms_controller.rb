@@ -54,6 +54,9 @@ class RoomsController < ApplicationController
     end
   end
 
+  def cpu_name ai_id,i
+    "#{"とても" if ai_id == 2}強いCPU\##{i+1}"
+  end
 
   def game_start cpus=[]
     return unless user_sign_in?
@@ -64,10 +67,16 @@ class RoomsController < ApplicationController
       return render_error "the room\##{room.id} does not have empty seat" unless room.has_empty_seat?
       (room.number_of_players - room.users.length).times do |i|
         #TODO ai_id をちゃんと決めよう
-        ai_id = 1
+        ai_id = cpus[i].present?? cpus[i] : [1,1,1,2].sample
+        ai_id = 1 unless (1..2).include? ai_id
+#TODO
+#TODO
+#TODO
+#TODO
+        ai_id = 2
         counter = User.find_by(ai_id: ai_id)
         User.create(
-            :display_name => "CPU\##{i+1}",
+            :display_name => cpu_name(ai_id,i),
             :ai_id        => ai_id,
             :room_id      => room.id,
             :win_count    => counter.win_count,

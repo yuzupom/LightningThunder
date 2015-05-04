@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  has_one :user_game_infomation
+  has_one :user_game_infomation, dependent: :destroy
   belongs_to :room
 
   before_create :create_remember_token
@@ -53,24 +53,31 @@ class User < ActiveRecord::Base
     Digest::SHA1.hexdigest(token.to_s)
   end
 
-  def right_person current_user
-    arr = [:OPPONENT, :RIGHT_PERSON, :THIRD_LEFT_PERSON]
+  def left_person
+    find_position [:OPPONENT, :LEFT_PERSON, :FIRST_LEFT_PERSON]
+  end
+
+  def find_position arr
     room.users.find{|user|
-      arr.include? user.position(current_user)
+      arr.include? user.position(self)
     }
   end
 
-  def position current_user
-    return nil unless current_user
-    return :YOU if self == current_user
-    current_user_position = -1
+  def right_person
+    find_position [:OPPONENT, :RIGHT_PERSON, :THIRD_LEFT_PERSON]
+  end
+
+  def position from_user
+    return nil unless from_user
+    return :YOU if self == from_user
+    from_user_position = -1
     target_user_position = -1
     room.users.length.times{|i|
-      current_user_position = i if room.users[i] == current_user
+      from_user_position = i if room.users[i] == from_user
       target_user_position  = i if room.users[i] == self
     }
-    if current_user != -1 && target_user_position != -1
-      diff = target_user_position - current_user_position
+    if from_user != -1 && target_user_position != -1
+      diff = target_user_position - from_user_position
       diff += room.number_of_players if diff < 0
       diff -= room.number_of_players if diff >= room.number_of_players
       case room.number_of_players
