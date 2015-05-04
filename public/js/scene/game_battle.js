@@ -1,7 +1,6 @@
 (function(){
 	var tag = 'game_battle'
 	var dragon_id = null;
-	var base_url = 'https://lightning-thunder.herokuapp.com/api/v1'
 	scene_tag[tag] = {}
 	
 	scene_tag[tag].onStart = function(){

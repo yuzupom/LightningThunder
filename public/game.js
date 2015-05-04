@@ -7,7 +7,7 @@ var xhr;
 	var base_url = 'https://lightning-thunder.herokuapp.com/api/v1/'	
 	xhr = function(method, url, cb){
 		var xhr = new XMLHttpRequest();
-		xhr.open(method , url);
+		xhr.open(method , base_url + url);
 		xhr.onreadystatechange = function(){
 			if (xhr.readyState === 4){
 				cb(JSON.parse(xhr.responseText));
@@ -257,7 +257,6 @@ compo = {};
 	}
 })();
 
-
 var Data = {};
 
 (function(){
@@ -265,21 +264,30 @@ var Data = {};
 		var player_infos = []
 		for(var i=0; i<4; i++){
 			var pl = Data.room.seated_users[i];
-			for(var j=0; j<4; j++){
-				if(pl.game_infomation.position == TABLE.SEAT_ID[j]){
-					player_infos[j] = [];
-					player_infos[j][0] = pl.display_name;
-					var dragon = pl.game_infomation.dragon;
-					player_infos[j][1] = (dragon == "-hidden-") ? 6 : dragon.id;
-					player_infos[j][2] = pl.game_infomation.life;
-					if(pl.game_infomation.finger == "-hidden-" || 
-						pl.game_infomation.finger == "NOT-DECIDED"){
-						player_infos[j][3] = (pl.game_infomation.finger_ready) ? 6 : -1;
-					}
-					else{
-						player_infos[j][3] = pl.game_infomation.finger;						
-					}
-				}				
+			if(!pl.game_infomation){
+				player_infos[j] = [];
+				player_infos[j][0] = pl.display_name;
+				player_infos[j][1] = 6;
+				player_infos[j][2] = 0;
+				player_infos[j][3] = -1;
+			}
+			else{
+				for(var j=0; j<4; j++){
+					if(pl.game_infomation.position == TABLE.SEAT_ID[j]){
+						player_infos[j] = [];
+						player_infos[j][0] = pl.display_name;
+						var dragon = pl.game_infomation.dragon;
+						player_infos[j][1] = (dragon == "-hidden-") ? 6 : dragon.id;
+						player_infos[j][2] = pl.game_infomation.life;
+						if(pl.game_infomation.finger == "-hidden-" || 
+							pl.game_infomation.finger == "NOT-DECIDED"){
+							player_infos[j][3] = (pl.game_infomation.finger_ready) ? 6 : -1;
+						}
+						else{
+							player_infos[j][3] = pl.game_infomation.finger;						
+						}
+					}				
+				}
 			}
 		}
 		return player_infos;
@@ -859,7 +867,6 @@ var template = {};
 (function(){
 	var tag = 'game_battle'
 	var dragon_id = null;
-	var base_url = 'https://lightning-thunder.herokuapp.com/api/v1'
 	scene_tag[tag] = {}
 	
 	scene_tag[tag].onStart = function(){
@@ -1171,7 +1178,6 @@ var template = {};
 		}
 	}
 })();
-
 (function(){
 	var tag = 'game_damage'
 	var dragon_id = null;
@@ -1417,7 +1423,6 @@ var template = {};
 		}
 	}
 })();
-
 (function(){
 	var tag = 'game_waituser_performer'
 	var dragon_id = null;
@@ -1485,7 +1490,6 @@ var template = {};
 		}
 	}
 })();
-
 (function(){
 	var tag = 'game_whodoneit_audience'
 	var update_timer;
@@ -1544,7 +1548,6 @@ var template = {};
 		ctx.drawImage(c, 0, 370)
 	}
 })();
-
 (function(){
 	var tag = 'game_whodoneit_performer'
 	var choosed_dragon = null;
@@ -1665,7 +1668,7 @@ var template = {};
 						Data.room = data;
 						Scene.change('game_waituser_audience');
 					}
-					var room_id = Data.rooms[i].id;
+					var room_id = Data.rooms[i].detail.id;
 					api['POST']['rooms/seats/take'](room_id, cb);
 				}
 			})(i, this.room);
@@ -1766,7 +1769,12 @@ var template = {};
 				Data.user = data;
 				Scene.change('lobby_choose');
 			}
-			api['POST']['users'](textbox.elm.value + '国', cb);
+			if(textbox.elm.value != ''){
+				api['POST']['users'](textbox.elm.value + '国', cb);			
+			}
+			else{
+				api['POST']['users']('', cb);			
+			}
 		}
 	}
 	scene_tag[tag].onEnd = function(){
@@ -1793,3 +1801,4 @@ var template = {};
 		}
 	}
 })();
+

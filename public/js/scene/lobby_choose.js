@@ -24,7 +24,7 @@
 						Data.room = data;
 						Scene.change('game_waituser_audience');
 					}
-					var room_id = Data.rooms[i].id;
+					var room_id = Data.rooms[i].detail.id;
 					api['POST']['rooms/seats/take'](room_id, cb);
 				}
 			})(i, this.room);

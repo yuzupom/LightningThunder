@@ -5,21 +5,30 @@ var Data = {};
 		var player_infos = []
 		for(var i=0; i<4; i++){
 			var pl = Data.room.seated_users[i];
-			for(var j=0; j<4; j++){
-				if(pl.game_infomation.position == TABLE.SEAT_ID[j]){
-					player_infos[j] = [];
-					player_infos[j][0] = pl.display_name;
-					var dragon = pl.game_infomation.dragon;
-					player_infos[j][1] = (dragon == "-hidden-") ? 6 : dragon.id;
-					player_infos[j][2] = pl.game_infomation.life;
-					if(pl.game_infomation.finger == "-hidden-" || 
-						pl.game_infomation.finger == "NOT-DECIDED"){
-						player_infos[j][3] = (pl.game_infomation.finger_ready) ? 6 : -1;
-					}
-					else{
-						player_infos[j][3] = pl.game_infomation.finger;						
-					}
-				}				
+			if(!pl.game_infomation){
+				player_infos[j] = [];
+				player_infos[j][0] = pl.display_name;
+				player_infos[j][1] = 6;
+				player_infos[j][2] = 0;
+				player_infos[j][3] = -1;
+			}
+			else{
+				for(var j=0; j<4; j++){
+					if(pl.game_infomation.position == TABLE.SEAT_ID[j]){
+						player_infos[j] = [];
+						player_infos[j][0] = pl.display_name;
+						var dragon = pl.game_infomation.dragon;
+						player_infos[j][1] = (dragon == "-hidden-") ? 6 : dragon.id;
+						player_infos[j][2] = pl.game_infomation.life;
+						if(pl.game_infomation.finger == "-hidden-" || 
+							pl.game_infomation.finger == "NOT-DECIDED"){
+							player_infos[j][3] = (pl.game_infomation.finger_ready) ? 6 : -1;
+						}
+						else{
+							player_infos[j][3] = pl.game_infomation.finger;						
+						}
+					}				
+				}
 			}
 		}
 		return player_infos;

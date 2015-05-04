@@ -15,7 +15,12 @@
 				Data.user = data;
 				Scene.change('lobby_choose');
 			}
-			api['POST']['users'](textbox.elm.value + '国', cb);
+			if(textbox.elm.value != ''){
+				api['POST']['users'](textbox.elm.value + '国', cb);			
+			}
+			else{
+				api['POST']['users']('', cb);			
+			}
 		}
 	}
 	scene_tag[tag].onEnd = function(){
