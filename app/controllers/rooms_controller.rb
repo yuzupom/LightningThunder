@@ -7,7 +7,10 @@ class RoomsController < ApplicationController
         room.to_h(current_user)
       }
     else
-      super v.to_h(current_user)
+      v.with_lock do
+        checkTimeOut v
+      end
+      super v.reload.to_h(current_user)
     end
   end
 
@@ -54,10 +57,6 @@ class RoomsController < ApplicationController
     end
   end
 
-  def cpu_name ai_id,i
-    "#{"とても" if ai_id == 2}強いCPU\##{i+1}"
-  end
-
   def game_start cpus=[]
     return unless user_sign_in?
     room = current_user.room
@@ -65,24 +64,7 @@ class RoomsController < ApplicationController
     room.with_lock do
       return render_error "the room\##{room.id} does not wait for more players" unless room.waits_more_players?
       return render_error "the room\##{room.id} does not have empty seat" unless room.has_empty_seat?
-      (room.number_of_players - room.users.length).times do |i|
-        #TODO ai_id をちゃんと決めよう
-        ai_id = cpus[i].present?? cpus[i] : [1,1,1,2].sample
-        ai_id = 1 unless (1..2).include? ai_id
-#TODO
-#TODO
-#TODO
-#TODO
-        ai_id = 2
-        counter = User.find_by(ai_id: ai_id)
-        User.create(
-            :display_name => cpu_name(ai_id,i),
-            :ai_id        => ai_id,
-            :room_id      => room.id,
-            :win_count    => counter.win_count,
-            :lose_count   => counter.lose_count
-          )
-      end
+      room.makeCPUS cpus
       room.reload
       room.updateStatusTo :BeginingGame
       success = startGame(room)

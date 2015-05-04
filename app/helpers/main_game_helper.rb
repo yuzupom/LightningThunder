@@ -11,6 +11,20 @@ module MainGameHelper
     return true
   end
 
+  def checkTimeOut room
+    return unless room.waits_for_lightning? || room.waits_for_dragon_name? || room.waits_for_ok?
+    return if room.past_time < 45
+    room.users.each{|user|
+      if room.waits_for_lightning?
+        replaceIntoCPU(user,room) if user.finger.nil?
+      elsif room.waits_for_dragon_name?
+        replaceIntoCPU(user,room) if user_.user_game_infomation.dragon_card.short_name == :推理
+      elsif room.waits_for_ok?
+        replaceIntoCPU(user,room) unless user_.user_game_infomation.posted_ok
+      end
+    }
+  end
+
   def startRound locked_room
     lock(locked_room) do
       success = locked_room.updateStatusTo :PlayingGame_WaitingForLightning
@@ -19,7 +33,6 @@ module MainGameHelper
       dealCard
       decideCPUFinger
     end
-    resetTime
   end
 
   def postOK locked_room
@@ -54,7 +67,6 @@ module MainGameHelper
         endRound locked_room
       end
     end
-    resetTime
     return true
   end
 
@@ -227,6 +239,7 @@ module MainGameHelper
     def lock room
       @locked_room = room
       yield
+      resetTime if @locked_room
       @locked_room = nil
     end
 
@@ -234,16 +247,16 @@ module MainGameHelper
       @locked_room.touch
     end
 
+    def replaceIntoCPU user,room
+      new_cpu = room.makeCPU 1
+      user.update_attribute(:room_id, nil)
+      user.user_game_infomation.update_attribute(:user_id, new_cpu.id)
+      room.reload
+      room.users.each{|user|
+        return if user.ai_id.nil?
+      }
+      room.close
+    end
 
-=begin
-  t.integer :dragon_card_id
-  t.integer :called_dragon_card_id
-  t.boolean :finger_1st, default:false
-  t.boolean :finger_2nd, default:false
-  t.boolean :finger_3rd, default:false
-  t.boolean :finger_4th, default:false
-  t.boolean :finger_5th, default:false
-  t.boolean :parent, default:false
-  t.integer :user_id, index:true
-=end
+
 end

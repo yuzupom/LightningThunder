@@ -11,6 +11,7 @@ class Room < ActiveRecord::Base
         room_status_name:room_status_name,
         #creater:creater,
         seated_users:seated_users(current_user),
+        past_time:past_time,
         detail:detail
       }
   end
@@ -28,6 +29,34 @@ class Room < ActiveRecord::Base
   def waits_for_lightning?
     sym = self.room_status_name.to_sym
     return :PlayingGame_WaitingForLightning == sym
+  end
+
+  def past_time
+    Time.zone.now - self.updated_at
+  end
+
+  def cpu_name ai_id,i
+    "#{"とても" if ai_id == 2}強いCPU\##{i+1}"
+  end
+
+  def makeCPUS cpus
+    (number_of_players - users.length).times do |i|
+      #TODO ai_id をちゃんと決めよう
+      ai_id = cpus[i].present?? cpus[i] : [1,1,1,2].sample
+      makeCPU ai_id,i
+    end
+  end
+
+  def makeCPU ai_id,i=users.length
+    ai_id = 1 unless (1..2).include? ai_id
+    counter = User.find_by(ai_id: ai_id)
+    return User.create(
+        :display_name => cpu_name(ai_id,i),
+        :ai_id        => ai_id,
+        :room_id      => self.id,
+        :win_count    => counter.win_count,
+        :lose_count   => counter.lose_count
+      )
   end
 
   def waits_for_dragon_name?
