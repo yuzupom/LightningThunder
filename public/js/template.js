@@ -124,7 +124,7 @@ var template = {};
 
 		//ドラゴンの画像を表示する
 		//index.html内で,画像を既にロードしてます。使いたい画像はindex.htmlで読み込んどいてください。
-		ctx.drawImage(img.get('img/カード画像/'+TABLE.DRAGON_NAME[dragon_id]+'.png'), 1, 20, 95, 130)
+		ctx.drawImage(img.get('img/カード画像/'+TABLE.DRAGON_NAME[dragon_id]+'.png'), 1, 20, 95, 130)
 
 		//ライフの数だけ王冠表示する
 		for(var i=0;i<life;i++){
@@ -168,7 +168,7 @@ var template = {};
 		var w = 70
 		var h = 100
 		for (var i = 0; i < 6;i++){
-			image = img.get('img/ドラゴン画像/d_'+TABLE.DRAGON_NAME[i]+'.png')
+			image = img.get('img/ドラゴン画像/d_'+TABLE.DRAGON_NAME[i]+'.png')
 			ctx.drawImage(image, x, 55 - h/2, w, h)
 			x +=  d + w
 		}
@@ -237,7 +237,7 @@ var template = {};
 		var ctx = c.getContext('2d');
 
 		var dragon_name = TABLE.DRAGON_NAME[dragon_id];
-		ctx.drawImage(img.get('img/カード画像/'+dragon_name+'.png'), 0, 0, c.width, c.height)
+		ctx.drawImage(img.get('img/カード画像/'+dragon_name+'.png'), 0, 0, c.width, c.height)
 		return c
 	}
 

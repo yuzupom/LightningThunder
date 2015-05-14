@@ -4,18 +4,29 @@
 	scene_tag[tag] = {}
 	scene_tag[tag].onStart = function(){
 		this.objs = [];
-		var button = compo.makeButton(400, 100, 100, 50, 'ドラゴンへ');
-		this.objs.push(button);
-		var result = compo.makeButton(400, 160, 100, 50, 'リザルトへ');
-		this.objs.push(result);
+		if(Data.room.room_status_name == "PlayingGame_WaitingForOK"){
+			var button = compo.makeButton(400, 100, 100, 50, 'ドラゴンへ');
+			this.objs.push(button);
+			//決定ボタン押したら
+			button.elm.onclick = function(){
+				var cb = function(data){
+					var cb = function(data){
+						Data.room = data;
+						Scene.change('game_encountDragon');
+					}
+					api['GET']['room'](cb);
+				}
+				api['POST']['game/ok'](cb);
+			}
+		}
+		if(Data.room.room_status_name == "EndingGame"){
+			var result = compo.makeButton(400, 160, 100, 50, 'リザルトへ');
+			this.objs.push(result);
+			result.elm.onclick = function(){
+				Scene.change('game_result');			
+			}
+		}
 
-		//決定ボタン押したら
-		button.elm.onclick = function(){
-			Scene.change('game_encountDragon');		
-		}
-		result.elm.onclick = function(){
-			Scene.change('game_result');			
-		}
 
 		var player_infos = Data.getPlayerInfos();
 		var hand = [];

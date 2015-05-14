@@ -10,7 +10,7 @@
 
 		//決定ボタン押したら
 		button.elm.onclick = function(){
-			Scene.change('game_damage');			
+			Scene.change('game_damage');		
 		}
 		var player_infos = Data.getPlayerInfos();
 		var hand = [];
@@ -25,7 +25,7 @@
 				}
 				hand[i].elm.onmouseout = function(){
 					dragon_id = null;
-				}			
+				}
 			})(i);
 		}
 	}

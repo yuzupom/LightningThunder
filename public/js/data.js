@@ -3,29 +3,31 @@ var Data = {};
 (function(){
 	Data.getPlayerInfos = function(){
 		var player_infos = []
-		for(var i=0; i<4; i++){
-			if(typeof Data.room.seated_users[i] === "undefined"){
-				player_infos[j] = [];
-				player_infos[j][0] = "空席";					
-				player_infos[j][1] = 6;
-				player_infos[j][2] = 0;
-				player_infos[j][3] = -1;
+		if(typeof Data.room.seated_users == "undefined" 
+			|| Data.room.seated_users.length != 4){
+			for(var i=0; i<4; i++){
+				player_infos[i] = [];
+				if(typeof Data.room.seated_users == "undefined"
+					|| typeof Data.room.seated_users[i] === "undefined"){
+					player_infos[i][0] = "空席";	
+				}
+				else{
+					player_infos[i][0] = Data.room.seated_users[i].display_name;
+				}
+				player_infos[i][1] = 7;
+				player_infos[i][2] = 0;
+				player_infos[i][3] = -1;
 			}
-			var pl = Data.room.seated_users[i];
-			if(pl.game_infomation == null){
-				player_infos[j] = [];
-				player_infos[j][0] = pl.display_name;
-				player_infos[j][1] = 6;
-				player_infos[j][2] = 4;
-				player_infos[j][3] = -1;
-			}
-			else{
+		}
+		else{
+			for(var i=0; i<4; i++){
+				var pl = Data.room.seated_users[i];
 				for(var j=0; j<4; j++){
 					if(pl.game_infomation.position == TABLE.SEAT_ID[j]){
 						player_infos[j] = [];
 						player_infos[j][0] = pl.display_name;
 						var dragon = pl.game_infomation.dragon;
-						player_infos[j][1] = (dragon == "-hidden-") ? 6 : dragon.id;
+						player_infos[j][1] = (dragon == "-hidden-") ? 7 : dragon.id;
 						player_infos[j][2] = pl.game_infomation.life;
 						if(pl.game_infomation.finger == "-hidden-" || 
 							pl.game_infomation.finger == "NOT-DECIDED"){
@@ -43,8 +45,19 @@ var Data = {};
 })();
 
 (function(){
-	// Dummy Data
-	Data.user = {
+	// Data
+	Data.user = {};
+	Data.users = [];
+	Data.room = {
+		seated_users:[],
+		deatil:{},
+	};
+	Data.rooms = [];
+	Data.dragons = {};
+
+	// Seed Data
+	DummyData = {};
+	DummyData.user = {
 		"id":25,
 		"display_name":"北国",	
 		"win_count":0,
@@ -56,9 +69,9 @@ var Data = {};
 		"seated_room_id":null
 	}
 
-	Data.users = [Data.user, Data.user, Data.user];
+	DummyData.users = [DummyData.user, DummyData.user, DummyData.user];
 
-	Data.room = {
+	DummyData.room = {
 		"name":"test_room",
 		"number_of_players":4,
 		"room_status_name":"PlayingGame_WaitingForLightning",
@@ -164,7 +177,7 @@ var Data = {};
 		}
 	};
 
-	Data.rooms = [
+	DummyData.rooms = [
 		{
 			"name":"aaa",
 			"number_of_players":4,
@@ -202,7 +215,7 @@ var Data = {};
 		}
 	]
 
-	Data.dragons = [
+	DummyData.dragons = [
 		{"id":0,"name":"雷竜の右腕　ルドベギア","short_word":"推理","for_2_players":true,"for_3_players":true,"for_4_players":true,"main_text":"未実装","flavor_text":"未実装","atk":999999},
 		{"id":1,"name":"常勝帝　VR・リンドウ","short_word":"運命","for_2_players":true,"for_3_players":true,"for_4_players":true,"main_text":"未実装","flavor_text":"未実装","atk":700000},
 		{"id":2,"name":"真実詠み　ギャリー・マ・エイビス","short_word":"無双","for_2_players":false,"for_3_players":false,"for_4_players":true,"main_text":"未実装","flavor_text":"未実装","atk":600000},
@@ -211,4 +224,6 @@ var Data = {};
 		{"id":5,"name":"可能性の生誕","short_word":"奇数","for_2_players":true,"for_3_players":true,"for_4_players":false,"main_text":"未実装","flavor_text":"未実装","atk":500},
 		{"id":6,"name":"転卵","short_word":"なし","for_2_players":false,"for_3_players":false,"for_4_players":true,"main_text":"未実装","flavor_text":"未実装","atk":100}
 	];
+
+	Data.dragons = DummyData.dragons;
 })();

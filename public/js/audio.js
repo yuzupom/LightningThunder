@@ -17,7 +17,6 @@ var audio = {};
 		var source;
 		audio.playBGM = function(filename){
 			var buffer = S[filename]
-			console.log(buffer);
 			source = context.createBufferSource();
 			source.buffer = buffer;
 			source.loop = true;

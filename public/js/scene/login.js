@@ -10,6 +10,7 @@
 
 		//決定ボタン押したら
 		button.elm.onclick = function(){
+			api['POST']['rooms/seats/leave']();			
 			audio.playSE("se/決定音候補/se_maoudamashii_system40.mp3");
 			var cb = function(data){
 				Data.user = data;
@@ -19,7 +20,7 @@
 				}
 				api['GET']['rooms'](cb);
 			}
-			if(false && textbox.elm.value != ''){
+			if(textbox.elm.value != ''){
 				api['POST']['users'](textbox.elm.value + '国', cb);
 			}
 			else{

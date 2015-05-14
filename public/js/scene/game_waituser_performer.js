@@ -18,7 +18,7 @@
 				audio.playBGM("bgm/BGM候補/game_maoudamashii_5_castle04.mp3")
 				Scene.change('game_encountDragon');
 			}
-			api['GET']['room'](cb);
+			api['POST']['game/start'](cb);
 		}
 		exit.elm.onclick = function(){
 			var cb = function(data){

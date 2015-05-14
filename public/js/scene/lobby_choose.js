@@ -5,10 +5,10 @@
 		this.objs = [];
 		var makeroom = compo.makeButton(160, 40, 200, 70, '部屋作');
 		this.objs.push(makeroom);
-		this.room = [];
+		this.rooms = [];
 		for(var i=0; i<4; i++){
-			this.room[i] = compo.makeButton(70, 118+i*85, 500, 80, '部屋'+i);
-			this.objs.push(this.room[i]);
+			this.rooms[i] = compo.makeButton(70, 118+i*85, 500, 80, '部屋'+i);
+			this.objs.push(this.rooms[i]);
 		}
 
 		makeroom.elm.onclick = function(){
@@ -30,8 +30,8 @@
 		for(var j=0; j<Data.rooms.length; j++){
 			if(!Data.rooms[j]){continue}
 			if(Data.rooms[j].room_status_name != "WaitingForPlayers"){continue}
-			(function(i, room){
-				room[i].elm.onclick = function(){
+			(function(i, j, rooms_elm){
+				rooms_elm[i].elm.onclick = function(){
 					audio.playSE("se/決定音候補/se_maoudamashii_system40.mp3");
 					var cb = function(data){
 						Data.room = data;
@@ -42,7 +42,7 @@
 					var room_id = Data.rooms[j].detail.id;
 					api['POST']['rooms/seats/take'](room_id, cb);
 				}
-			})(i, this.room);
+			})(i, j, this.rooms);
 			i++;
 		}
 	}

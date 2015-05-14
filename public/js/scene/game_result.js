@@ -14,7 +14,7 @@
 				audio.stopBGM();
 				Scene.change('lobby_choose');
 			}
-			api['POST']['game/ok'](cb);
+			api['POST']['rooms/seats/leave'](cb);
 		}
 
 		var player_infos = Data.getPlayerInfos();

@@ -9,7 +9,7 @@
 		update_timer = setInterval(function(){
 			var cb = function(data){
 				Data.room = data;
-				if(Data.room != "PlayingGame_WaitingForDragonName"){
+				if(Data.room.room_status_name != "PlayingGame_WaitingForDragonName"){
 					if(update_timer){
 						clearInterval(update_timer);
 						update_timer = null;

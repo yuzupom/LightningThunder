@@ -13,8 +13,10 @@ TABLE = {};
 		'ifeion',
 		'akonitam',
 		'tenran',
+		'tenran',
 		'ura'
 	];
+	// kanousi
 	TABLE.GAME_STATE = [
 		"CreatingRoom",
     	"WaitingForPlayers",

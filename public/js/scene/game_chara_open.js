@@ -16,13 +16,14 @@
 		update_timer = setInterval(function(){
 			var cb = function(data){
 				Data.room = data;
-				if(Data.room == "PlayingGame_WaitingForDragonName"){
+				console.log(Data.room.room_status_name);
+				if(Data.room.room_status_name == "PlayingGame_WaitingForDragonName"){
 					if(update_timer){
 						clearInterval(update_timer);
 						update_timer = null;
 						audio.playSE("se/決定音候補/se_maoudamashii_system40.mp3");
 						player_infos = Data.getPlayerInfos();
-						if(player_infos[0][1] == 'rudobegia'){
+						if(player_infos[0][1] == 0){
 							Scene.change('game_whodoneit_performer');
 						}
 						else{
@@ -30,7 +31,8 @@
 						}
 					}
 				}
-				if(Data.room == "PlayingGame_WaitingForOK"){
+				if(Data.room.room_status_name == "PlayingGame_WaitingForOK" ||
+					Data.room.room_status_name == "EndingGame"){
 					if(update_timer){
 						clearInterval(update_timer);
 						update_timer = null;

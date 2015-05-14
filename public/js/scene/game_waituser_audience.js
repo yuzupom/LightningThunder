@@ -13,7 +13,7 @@
 		update_timer = setInterval(function(){
 			var cb = function(data){
 				Data.room = data;
-				if(Data.room != "WaitingForPlayers"){
+				if(Data.room.room_status_name != "WaitingForPlayers"){
 					if(update_timer){
 						clearInterval(update_timer);
 						update_timer = null;

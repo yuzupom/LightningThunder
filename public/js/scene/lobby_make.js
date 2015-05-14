@@ -2,7 +2,6 @@
 	var tag = 'lobby_make'
 	scene_tag[tag] = {}
 	scene_tag[tag].onStart = function(){
-		console.log('hoge')
 		this.objs = [];
 		var textbox = compo.makeTextbox(223, 205, 250, 30);
 		this.objs.push(textbox);
