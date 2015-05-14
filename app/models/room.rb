@@ -32,7 +32,7 @@ class Room < ActiveRecord::Base
   end
 
   def past_time
-    Time.zone.now - self.updated_at
+    in_game? ?  Time.zone.now - self.updated_at : "NOT IN GAME"
   end
 
   def cpu_name ai_id,i
@@ -119,6 +119,9 @@ class Room < ActiveRecord::Base
       else
         user.update_attribute(:room_id, nil)
       end
+    }
+    UserGameInfomation.all.each{|info|
+      info.destroy if info.user.room.nil?
     }
   end
 

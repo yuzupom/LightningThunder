@@ -14,16 +14,33 @@ module MainGameHelper
   def checkTimeOut room
     return unless room.waits_for_lightning? || room.waits_for_dragon_name? || room.waits_for_ok?
     return if room.past_time < 45
-    room.users.each{|user|
+    lock(room) do
       if room.waits_for_lightning?
-        replaceIntoCPU(user,room) if user.finger.nil?
+        applyToUsers {|user| replaceIntoCPU(user,room) if user.finger.nil? }
+        gotoDragonNamePhase room
       elsif room.waits_for_dragon_name?
-        replaceIntoCPU(user,room) if user_.user_game_infomation.dragon_card.short_name == :推理
+        applyToUsers {|user| replaceIntoCPU(user,room) if user.user_game_infomation.dragon_card.short_name == :推理 }
+        endRound room
       elsif room.waits_for_ok?
-        replaceIntoCPU(user,room) unless user_.user_game_infomation.posted_ok
+        applyToUsers {|user| user.user_game_infomation.update_attribute(:posted_ok,true) }
+        postOK(room)
       end
-    }
+      room.reload
+      flg_player_exist = room.users.find{|user| user.ai_id.nil? }.nil?
+      room.close unless flg_player_exist
+    end
+
+
+
   end
+
+  def applyToUsers
+    @locked_room.users.each{|user|
+      yield user
+    }
+    @locked_room.reload
+  end
+
 
   def startRound locked_room
     lock(locked_room) do
@@ -37,13 +54,11 @@ module MainGameHelper
 
   def postOK locked_room
     lock(locked_room) do
-      flg = locked_room.users.each{|user|
-          break false unless user.user_game_infomation.posted_ok
-        }
-      return false unless flg
-      startRound locked_room if flg != false
+      flg_not_ok_yet = locked_room.users.find{|user| !user.user_game_infomation.posted_ok}.present?
+      startRound locked_room unless flg_not_ok_yet
+      return flg_not_ok_yet
     end
-    return true
+    return false
   end
 
   def gotoDragonNamePhase locked_room
@@ -154,6 +169,7 @@ module MainGameHelper
           @locked_room.users.find{|user| user.user_game_infomation.rank==1}
         end
       end
+
       flg_LOVE_EGG = only_one_winner.present? &&
         only_one_winner.user_game_infomation.dragon_card.short_name == :奇数
       flg_VOID_EGG = only_one_winner.present? &&
@@ -248,14 +264,16 @@ module MainGameHelper
     end
 
     def replaceIntoCPU user,room
-      new_cpu = room.makeCPU 1
+      new_cpu = room.makeCPU [1,2].sample
       user.update_attribute(:room_id, nil)
       user.user_game_infomation.update_attribute(:user_id, new_cpu.id)
-      room.reload
-      room.users.each{|user|
-        return if user.ai_id.nil?
-      }
-      room.close
+      user.reload
+      new_cpu.reload
+      if room.waits_for_lightning?
+        new_cpu.saveFingers(cpu_fingers(new_cpu))
+      elsif room.waits_for_dragon_name?
+        new_cpu.user_game_infomation.update_attribute(:called_dragon_card_id, decideCPUDragonName(new_cpu))
+      end
     end
 
 

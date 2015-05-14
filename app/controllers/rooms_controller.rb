@@ -106,8 +106,13 @@ class RoomsController < ApplicationController
     room = current_user.room
     return not_seated_error unless room
     room.with_lock do
-      return render_error "the room is already in game" if room.in_game?
-      current_user.update_attribute(:room_id, nil)
+      flg_force = params[:force] == "true"
+      if flg_force
+        replaceIntoCPU(current_user,room) if room.in_game?
+      else
+        return render_error "the room is already in game" if room.in_game?
+        current_user.update_attribute(:room_id, nil)
+      end
       room.close if room.creater_id == current_user.id
       return render_json room.reload
     end
